@@ -3,21 +3,42 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start",
+    "start": "node ./build start",
+    "release-android": "node ./build release android",
     "test": "jest"
   },
   "dependencies": {
+    "febrest": "^0.11.16-autumn",
+    "prop-types": "^15.7.2",
     "react": "16.8.6",
-    "react-native": "0.60.5"
+    "react-febrest": "^0.11.7",
+    "react-lifecycles-compat": "^3.0.4",
+    "react-native": "0.60.5",
+    "react-native-awesome-viewpager": "^1.1.1",
+    "react-native-gesture-handler": "^1.4.1",
+    "react-native-webview": "^7.0.4",
+    "react-navigation": "^3.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/runtime": "^7.5.0",
     "@react-native-community/eslint-config": "^0.0.3",
-    "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
+    "@types/node": "^12.7.5",
+    "@types/prop-types": "^15.7.0",
+    "@types/react": "^16.8.7",
+    "@types/react-native": "^0.57.38",
+    "@types/react-native-vector-icons": "^6.4.0",
+    "@types/react-native-video": "^3.1.4",
+    "@types/react-navigation": "^3.0.6",
+    "@types/shelljs": "^0.8.5",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "24.3.1",
+    "jest": "24.3.1",
     "metro-react-native-babel-preset": "0.54.1",
-    "react-test-renderer": "16.8.6"
+    "react-native-typescript-transformer": "^1.2.12",
+    "react-test-renderer": "16.8.6",
+    "shelljs": "^0.8.3",
+    "typescript": "^3.3.3333"
   },
   "jest": {
     "preset": "react-native"
