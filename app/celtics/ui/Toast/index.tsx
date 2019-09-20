@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
-import { Text, View } from 'react-native-ui';
-import { createStyle } from 'themes';
-import { Plugin } from 'components/application/Plugin';
+import React, {PureComponent} from 'react';
+import {Text, View} from 'react-native-ui';
+import {createStyle} from '../../Theme';
+import {Plugin} from '../../Plugin';
 
 interface Props {}
 export interface State {
@@ -24,7 +24,7 @@ export default class Toast extends Plugin<ToastPayload> {
   }
   state: State = {
     showMessage: false,
-    message: ''
+    message: '',
   };
   private timeout: any;
   private callback: undefined | (() => void);
@@ -49,7 +49,7 @@ export default class Toast extends Plugin<ToastPayload> {
     if (dismiss === undefined) {
       dismiss = LONG_DISSMISS;
     }
-    this.setState({ message: message.toString(), showMessage: true });
+    this.setState({message: message.toString(), showMessage: true});
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
@@ -62,14 +62,14 @@ export default class Toast extends Plugin<ToastPayload> {
   private _dissmiss = () => {
     this.setState({
       message: '',
-      showMessage: false
+      showMessage: false,
     });
     this.callback && this.callback();
     this.callback = undefined;
     this.timeout = undefined;
   };
   render() {
-    const { message, showMessage } = this.state;
+    const {message, showMessage} = this.state;
     if (!showMessage) {
       return null;
     }
@@ -84,9 +84,9 @@ export default class Toast extends Plugin<ToastPayload> {
 const styles = createStyle(theme => ({
   wrapper: {
     position: 'absolute',
-    ...theme.toastWrapper
+    ...theme.toastWrapper,
   },
   message: {
-    ...theme.toastText
-  }
+    ...theme.toastText,
+  },
 }));

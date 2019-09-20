@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native-ui';
+import React, {PureComponent} from 'react';
+import {View, TouchableOpacity, Text} from 'react-native-ui';
 
-import { createStyle } from 'themes';
-import { resize, vw } from 'utils/resize';
-import { Plugin } from 'components/application/Plugin';
+import {createStyle} from '../../Theme';
+import {resize, vw} from 'utils/resize';
+import {Plugin} from '../../Plugin';
 export interface Props {}
 interface State {
   isShow: boolean;
@@ -29,7 +29,7 @@ export default class Alert extends Plugin<AlertConfig, Props> {
     isShow: false,
     buttons: [],
     title: '',
-    message: ''
+    message: '',
   };
   componentDidMount() {
     INST = this;
@@ -43,7 +43,7 @@ export default class Alert extends Plugin<AlertConfig, Props> {
     }
   }
   alert(config: AlertConfig) {
-    let { title, message, buttons = [{}, {}] } = config;
+    let {title, message, buttons = [{}, {}]} = config;
     if (!message) {
       return;
     }
@@ -62,7 +62,7 @@ export default class Alert extends Plugin<AlertConfig, Props> {
       buttons,
       title,
       message,
-      isShow: true
+      isShow: true,
     });
   }
   private _close = () => {
@@ -70,11 +70,11 @@ export default class Alert extends Plugin<AlertConfig, Props> {
       title: '',
       message: '',
       buttons: [],
-      isShow: false
+      isShow: false,
     });
   };
   render() {
-    const { isShow, buttons, title, message } = this.state;
+    const {isShow, buttons, title, message} = this.state;
     if (isShow) {
       return (
         <View {...this.props} style={[styles.alertWrapper]}>
@@ -88,13 +88,13 @@ export default class Alert extends Plugin<AlertConfig, Props> {
   }
 }
 
-function AlertTitle(props: { text: string }) {
+function AlertTitle(props: {text: string}) {
   if (props.text) {
     return <Text style={[styles.title]}>{props.text}</Text>;
   }
   return null;
 }
-function AlertMessage(props: { text: string }) {
+function AlertMessage(props: {text: string}) {
   if (props.text) {
     return (
       <View style={[styles.messageWrapper]}>
@@ -104,7 +104,7 @@ function AlertMessage(props: { text: string }) {
   }
   return null;
 }
-function AlertButtons(props: { buttons: IButton[] }) {
+function AlertButtons(props: {buttons: IButton[]}) {
   const buttons = props.buttons;
   const length = buttons.length;
 
@@ -112,10 +112,9 @@ function AlertButtons(props: { buttons: IButton[] }) {
     return (
       <View
         style={[
-          { flexDirection: 'column' },
-          length <= 2 && { flexDirection: 'row' }
-        ]}
-      >
+          {flexDirection: 'column'},
+          length <= 2 && {flexDirection: 'row'},
+        ]}>
         {buttons.map(function(button, i) {
           return (
             <TouchableOpacity
@@ -124,15 +123,13 @@ function AlertButtons(props: { buttons: IButton[] }) {
               activeOpacity={1}
               style={[
                 length <= 2 ? styles.button : styles.buttonl,
-                length == 2 && i == 1 && styles.borderLeft
-              ]}
-            >
+                length == 2 && i == 1 && styles.borderLeft,
+              ]}>
               <Text
                 style={[
                   styles.buttonText,
-                  length == 2 && i == 1 && { color: '#282828' }
-                ]}
-              >
+                  length == 2 && i == 1 && {color: '#282828'},
+                ]}>
                 {button.text}
               </Text>
             </TouchableOpacity>
@@ -153,25 +150,25 @@ const styles = createStyle(theme => ({
     overflow: 'hidden',
     position: 'absolute',
     top: resize(300),
-    right: resize(540 - 364) / 2
+    right: resize(540 - 364) / 2,
   },
   title: {
     textAlign: 'center',
     fontSize: resize(20),
     color: '#030303',
-    marginBottom: resize(20)
+    marginBottom: resize(20),
   },
   messageWrapper: {
     flexDirection: 'column',
     marginBottom: resize(20),
     minHeight: resize(78),
     marginHorizontal: resize(30),
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   message: {
     fontSize: resize(17),
     color: '#282828',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   button: {
     flex: 1,
@@ -180,27 +177,27 @@ const styles = createStyle(theme => ({
     alignItems: 'center',
     marginTop: resize(14),
     marginBottom: resize(14),
-    height: resize(20)
+    height: resize(20),
   },
   buttonl: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'rgba(0,0,0,0.12)',
-    borderTopWidth: theme.px
+    borderTopWidth: theme.px,
   },
   buttonText: {
     flex: 1,
     fontSize: resize(17),
     textAlign: 'center',
-    color: '#82704A'
+    color: '#82704A',
   },
   borderTop: {
     borderColor: 'rgba(0,0,0,0.12)',
-    borderTopWidth: theme.px
+    borderTopWidth: theme.px,
   },
   borderLeft: {
     borderColor: 'rgba(0,0,0,0.12)',
-    borderLeftWidth: theme.px
-  }
+    borderLeftWidth: theme.px,
+  },
 }));
