@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./build start",
-    "release-android": "node ./build release android",
+    "start": "node ./xman start",
+    "release-android": "node ./xman release android",
     "test": "jest"
   },
   "dependencies": {
