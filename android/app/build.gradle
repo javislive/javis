@@ -118,7 +118,8 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
-
+def appName = "javis";
+def packageName = "javis";
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -128,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.javis"
+        applicationId "host.spencer.javis"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -152,14 +153,30 @@ android {
     }
     buildTypes {
         debug {
+            buildConfigField("boolean", "LOG_DEBUG", "true")
             signingConfig signingConfigs.debug
+            buildConfigField ("String", "ENV", '"dev"')
+            resValue "string", "app_name", "${appName}DEV"
+            resValue "string", "package_name", "${packageName}DEV"
+            applicationIdSuffix ".debug"
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
+            buildConfigField ("String", "ENV", '"prod"')
+            resValue "string", "app_name", "${appName}"
+            resValue "string", "package_name", "${packageName}"
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        qa.initWith(release)
+        qa {
+            buildConfigField ("String", "ENV", '"qa"')
+            resValue "string", "app_name", "${appName}QA"
+            resValue "string", "package_name", "${packageName}QA"
+            matchingFallbacks = [ 'debug', 'release']
+            applicationIdSuffix ".qa"
         }
     }
     // applicationVariants are e.g. debug, release

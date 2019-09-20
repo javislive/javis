@@ -1,4 +1,4 @@
-package com.javis;
+package host.spencer.javis;
 
 import android.app.Application;
 import android.util.Log;

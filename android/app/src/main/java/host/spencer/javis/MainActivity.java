@@ -1,4 +1,4 @@
-package com.javis;
+package host.spencer.javis;
 
 import com.facebook.react.ReactActivity;
 
