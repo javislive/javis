@@ -20,7 +20,7 @@ function metro(env) {
       }),
     },
     resolver: {
-      sourceExts: [`${env}.tsx`, 'js', 'ts', 'tsx'],
+      sourceExts: [`${env}.tsx`, `${env}.ts`, 'js', 'ts', 'tsx'],
       extraNodeModules: {
         'react-native-ui': path.resolve(root, './app/react-native-ui'),
         services: path.resolve(root, './app/services'),
