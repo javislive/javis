@@ -5,7 +5,7 @@ import Application from 'celtics/Application';
 import React from 'react';
 import {dispatch} from 'febrest';
 import pages from './index';
-
+import {navigate} from 'controller/app';
 interface Props {}
 export default class PageList extends Page<Props> {
   constructor(props: any) {
@@ -23,7 +23,7 @@ export default class PageList extends Page<Props> {
         }}
         key={item.name}
         onPress={() => {
-          dispatch('app.navigate', {routeName: item.name});
+          dispatch(navigate, {routeName: item.name});
         }}>
         <Text>{item.name}</Text>
       </TouchableOpacity>

@@ -32,10 +32,11 @@ class App extends Application {
   private navigaionRef: RefObject<Navigation> = createRef();
   onCreate() {
     super.onCreate();
-    return this.requestPermission().then(() => {
-      // UserAgent.hideMask();
-      subscribe(this._ui);
-    });
+    subscribe(this._ui);
+    // return this.requestPermission().then(() => {
+    //   // UserAgent.hideMask();
+    //   subscribe(this._ui);
+    // });
   }
   onReady() {
     super.onReady();
