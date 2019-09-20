@@ -1,7 +1,6 @@
-import { State } from 'febrest';
-State('user');
+import {State} from 'febrest';
 export default {
   user: 'user',
   filter: 'filter',
-  city: 'city'
+  city: 'city',
 };

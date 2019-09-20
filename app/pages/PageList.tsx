@@ -1,16 +1,17 @@
-import { FlatList, Text, TouchableOpacity } from 'react-native';
+import {FlatList, Text, TouchableOpacity} from 'react-native';
+import Page, {PageClass} from 'celtics/Page';
 
+import Application from 'celtics/Application';
 import React from 'react';
+import {dispatch} from 'febrest';
 import pages from './index';
-import Page, { PageClass } from 'components/application/Page';
-import Application from 'components/application/Application';
-import { dispatch } from 'febrest';
+
 interface Props {}
 export default class PageList extends Page<Props> {
   constructor(props: any) {
     super(props);
   }
-  renderItem({ item }: { item: PageClass }) {
+  renderItem({item}: {item: PageClass}) {
     return (
       <TouchableOpacity
         style={{
@@ -18,13 +19,12 @@ export default class PageList extends Page<Props> {
           paddingLeft: 20,
           borderBottomWidth: Application.getTheme().px,
           borderBottomColor: '#fefefe',
-          justifyContent: 'center'
+          justifyContent: 'center',
         }}
         key={item.name}
         onPress={() => {
-          dispatch('app.navigate', { routeName: item.name });
-        }}
-      >
+          dispatch('app.navigate', {routeName: item.name});
+        }}>
         <Text>{item.name}</Text>
       </TouchableOpacity>
     );
