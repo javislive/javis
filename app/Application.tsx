@@ -9,7 +9,7 @@ import React, {RefObject, createRef} from 'react';
 import {bordercast, plugin, subscribe} from 'febrest';
 
 import Application from 'celtics/Application';
-import BuildConfig from 'BulidConfig';
+import BuildConfig from 'BuildConfig';
 import Navigation from 'celtics/Navigation';
 import {NavigationState} from 'react-navigation';
 import {View} from 'react-native-ui';
@@ -135,12 +135,6 @@ const styles = Application.createStyle(theme => {
     main: {
       flex: 1,
       flexDirection: 'column',
-    },
-    hello: {
-      color: 'white',
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 20,
     },
   };
 });
