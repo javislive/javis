@@ -50,6 +50,18 @@ export default class XDate extends Date {
       }
     });
   }
+  getFullHours(): string {
+    const h = this.getHours();
+    return h >= 10 ? h + '' : '0' + h;
+  }
+  getFullMinutes(): string {
+    const h = this.getMinutes();
+    return h >= 10 ? h + '' : '0' + h;
+  }
+  getFullSeconds(): string {
+    const h = this.getSeconds();
+    return h >= 10 ? h + '' : '0' + h;
+  }
   format(patten: string = 'yyyy-MM-dd') {
     return XDate.format(patten, this);
   }
@@ -86,7 +98,7 @@ export default class XDate extends Date {
     const end = new Date(
       endDate.getFullYear(),
       endDate.getMonth(),
-      endDate.getDate()
+      endDate.getDate(),
     );
     const start = new Date(this.getFullYear(), this.getMonth(), this.getDate());
     return Math.ceil((end.getTime() - start.getTime()) / 86400000);
@@ -116,6 +128,8 @@ export default class XDate extends Date {
   isToday(): boolean {
     return this.isDateSame(new Date());
   }
+  daysOfYear() {}
+  restDaysOfYear() {}
   nextYear() {
     this.setFullYear(this.getFullYear() + 1);
   }

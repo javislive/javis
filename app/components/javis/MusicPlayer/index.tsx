@@ -8,13 +8,14 @@ export default class MusicPlayer extends PureComponent {
     return (
       <View>
         <TouchableOpacity>
-          <FontIcon icon=""></FontIcon>
+          <FontIcon icon="&#xe6aa;"></FontIcon>
         </TouchableOpacity>
         <TouchableOpacity>
-          <FontIcon icon=""></FontIcon>
+          &#xe6b3;
+          <FontIcon icon="&#xe6a5;"></FontIcon>
         </TouchableOpacity>
         <TouchableOpacity>
-          <FontIcon icon=""></FontIcon>
+          <FontIcon icon="&#xe6a2;"></FontIcon>
         </TouchableOpacity>
       </View>
     );
