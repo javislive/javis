@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, '../');
 function pathResolve(path) {
   return path.resolve(root, path);
 }
-function metro(env) {
+function metro(env, platform) {
   return {
     transformer: {
       asyncRequireModulePath: 'react-native-typescript-transformer',
@@ -20,7 +20,15 @@ function metro(env) {
       }),
     },
     resolver: {
-      sourceExts: [`${env}.tsx`, `${env}.ts`, 'js', 'ts', 'tsx'],
+      sourceExts: [
+        `${env}.tsx`,
+        `${env}.ts`,
+        `${platform}.tsx`,
+        `${platform}.ts`,
+        'js',
+        'ts',
+        'tsx',
+      ],
       extraNodeModules: {
         'react-native-ui': path.resolve(root, './app/react-native-ui'),
         services: path.resolve(root, './app/services'),
