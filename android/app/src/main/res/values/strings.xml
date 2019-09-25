@@ -1,2 +1,4 @@
 <resources>
+    <string name="app_name">${app_name}</string>
+    <string name="package_name">${package_name}</string>
 </resources>

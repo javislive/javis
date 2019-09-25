@@ -77,6 +77,10 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     entryFile: "index.js",
+    devDisabledInRelease: true,
+    devDisabledInUat: true,
+    bundleInRelease: true,
+    bundleInUat: true,
     enableHermes: false,  // clean and rebuild if changing
 ]
 
@@ -118,8 +122,18 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
-def appName = "javis";
-def packageName = "javis";
+def appName = "javis-b";
+def appClientName = "javis"
+def packageName = "javis-b";
+def packageClientName = "javis"
+def configForPlatform(platform) {
+    if(platform=="client") {
+        return ["appName":appClientName,"packageName":packageClientName]
+    }else{
+        return ["appName":appName,"packageName":packageName]
+    }
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -155,32 +169,50 @@ android {
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
             signingConfig signingConfigs.debug
-            buildConfigField ("String", "ENV", '"dev"')
-            resValue "string", "app_name", "${appName}DEV"
-            resValue "string", "package_name", "${packageName}DEV"
+            buildConfigField("String", "ENV", '"dev"')
             applicationIdSuffix ".debug"
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            buildConfigField ("String", "ENV", '"prod"')
-            resValue "string", "app_name", "${appName}"
-            resValue "string", "package_name", "${packageName}"
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
-        qa.initWith(release)
-        qa {
-            buildConfigField ("String", "ENV", '"qa"')
-            resValue "string", "app_name", "${appName}QA"
-            resValue "string", "package_name", "${packageName}QA"
-            matchingFallbacks = [ 'debug', 'release']
-            applicationIdSuffix ".qa"
+        uat.initWith(release)
+        uat {
+            buildConfigField("String", "ENV", '"uat"')
+            matchingFallbacks = ['debug', 'release']
+            applicationIdSuffix ".uat"
         }
     }
-    // applicationVariants are e.g. debug, release
+
+    flavorDimensions "platform";
+    productFlavors {
+        client {
+            dimension "platform"
+            applicationId "host.spencer.javisclient"
+        }
+        server {
+            dimension "platform"
+            applicationId "host.spencer.javis"
+        }
+    }
+        // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
+        def buildType = variant.buildType.name;
+        def flavor = "";
+        def platform;
+        variant.productFlavors.each { product ->
+            flavor = "${flavor}${product.name}_";
+            if (product.dimension == "server") {
+                platform = configForPlatform(product.name);
+            }
+        };
+        variant.outputs.all {
+            outputFileName = outputFileName = "${flavor}${buildType}.apk"
+        }
+//        def appName = variant.productFlavor
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // https://developer.android.com/studio/build/configure-apk-splits.html
@@ -190,10 +222,8 @@ android {
                 output.versionCodeOverride =
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
-
         }
     }
-
     packagingOptions {
         pickFirst '**/armeabi-v7a/libc++_shared.so'
         pickFirst '**/x86/libc++_shared.so'
@@ -203,6 +233,7 @@ android {
         pickFirst '**/armeabi-v7a/libjsc.so'
     }
 }
+
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
