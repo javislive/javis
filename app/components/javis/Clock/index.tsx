@@ -43,7 +43,7 @@ export default class Clock extends PureComponent {
           <Text>
             {year}
             还剩下
-            {time.da}天{}小时
+            {}天{}小时
             {}分{}秒
           </Text>
         </View>

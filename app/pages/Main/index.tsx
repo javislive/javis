@@ -1,6 +1,8 @@
 import {SSocket, SSocketServer} from 'native';
 import {Text, TouchableOpacity, View} from 'react-native-ui';
 
+import Clock from 'components/javis/Clock';
+import MusicPlayer from 'components/javis/MusicPlayer';
 import Page from 'celtics/Page';
 import React from 'react';
 import {dispatch} from 'febrest';
@@ -51,6 +53,13 @@ export default class Main extends Page<Props> {
   }
 
   render() {
-    return <View></View>;
+    return (
+      <View>
+        <Clock></Clock>
+        <MusicPlayer></MusicPlayer>
+      </View>
+    );
   }
 }
+
+const styles = 
