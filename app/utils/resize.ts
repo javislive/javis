@@ -1,11 +1,11 @@
-import { Dimensions, PixelRatio } from "react-native";
+import {Dimensions, PixelRatio} from 'react-native';
 
-let widthDP = 540;
+let widthDP = 375;
 let widthPX = 1080;
 const PIXEL_RATIO = 2;
 const REAL_PIXEL_RATIO = PixelRatio.get();
-const REAL_WIDTH_DP = Dimensions.get("window").width;
-const REAL_HEIGHT_DP = Dimensions.get("window").height;
+const REAL_WIDTH_DP = Dimensions.get('window').width;
+const REAL_HEIGHT_DP = Dimensions.get('window').height;
 let ratio: number = REAL_WIDTH_DP / widthDP;
 
 /**

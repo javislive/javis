@@ -1,6 +1,7 @@
 import {SSocket, SSocketServer} from 'native';
 import {Text, TouchableOpacity, View} from 'react-native-ui';
 
+import Application from 'celtics/Application';
 import Clock from 'components/javis/Clock';
 import MusicPlayer from 'components/javis/MusicPlayer';
 import Page from 'celtics/Page';
@@ -54,7 +55,7 @@ export default class Main extends Page<Props> {
 
   render() {
     return (
-      <View>
+      <View style={styles.wrapper}>
         <Clock></Clock>
         <MusicPlayer></MusicPlayer>
       </View>
@@ -62,4 +63,11 @@ export default class Main extends Page<Props> {
   }
 }
 
-const styles = 
+const styles = Application.createStyle(() => {
+  return {
+    wrapper: {
+      flex: 1,
+      backgroundColor: '#fff',
+    },
+  };
+});
