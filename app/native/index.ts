@@ -1,10 +1,11 @@
 import FileCache from './modules/FileCache';
+import KeyEvent from './modules/KeyEvent';
 import LocationManger from './modules/LocationManger';
 import Picker from './views/Picker';
-import Switch from './views/Switch';
-import UserAgent from './modules/UserAgent';
 import SSocket from './modules/SSocket';
 import SSocketServer from './modules/SSocketServer';
+import Switch from './views/Switch';
+import UserAgent from './modules/UserAgent';
 
 export {
   UserAgent,
@@ -14,4 +15,5 @@ export {
   LocationManger,
   SSocket,
   SSocketServer,
+  KeyEvent,
 };

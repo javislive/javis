@@ -41,6 +41,7 @@ function metro(env, platform) {
         router: path.resolve(root, './app/router'),
         BuildConfig: path.resolve(root, './app/BuildConfig'),
         pages: path.resolve(root, './app/pages'),
+        constants: path.resolve(root, './app/constants'),
         store: path.resolve(root, './app/store'),
         controller: path.resolve(root, './app/controller'),
         state: path.resolve(root, './app/state'),
