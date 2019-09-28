@@ -12,9 +12,15 @@ export function preSong() {
 }
 export function playStop() {
   const musicState = State('music').get();
-  if (musicState && musicState.status == 'playing') {
+  if (!musicState || musicState.status != 'playing') {
     brain.send(CMD.MUSIC_PLAY);
-  }else{
-    
+    State('music').set({
+      status: 'playing',
+    });
+  } else {
+    brain.send(CMD.MUSIC_PAUSE);
+    State('music').set({
+      status: 'pause',
+    });
   }
 }

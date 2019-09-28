@@ -16,7 +16,7 @@ class Brain {
       console.log('message from server');
       console.log(data);
     };
-    SSocket.open('127.0.0.1', 1998);
+    SSocket.open('192.168.0.102', 1998);
   }
   onCMD(cmd: string) {}
   send(message: string, payload?: any) {
