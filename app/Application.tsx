@@ -14,7 +14,7 @@ import Navigation from 'celtics/Navigation';
 import {NavigationState} from 'react-navigation';
 import {View} from 'react-native-ui';
 import router from 'router';
-
+import brain from 'brain';
 const INTIAL_ROUTE_NAME = BuildConfig.env === 'dev' ? 'PageList' : 'StartPage';
 export interface State {
   navigation: number;
@@ -29,6 +29,7 @@ class App extends Application {
     ready: false,
     routeName: INTIAL_ROUTE_NAME,
   };
+  brain = brain;
   private navigaionRef: RefObject<Navigation> = createRef();
   onCreate() {
     super.onCreate();
@@ -44,6 +45,7 @@ class App extends Application {
       initialized: action => {},
       close: action => {},
     });
+    this.brain.init();
   }
   requestPermission() {
     return Platform.select({
