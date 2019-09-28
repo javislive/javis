@@ -31,6 +31,7 @@ function metro(env, platform) {
       ],
       extraNodeModules: {
         'react-native-ui': path.resolve(root, './app/react-native-ui'),
+        brand: path.resolve(root, './app/brand'),
         services: path.resolve(root, './app/services'),
         context: path.resolve(root, './app/context'),
         native: path.resolve(root, './app/native'),

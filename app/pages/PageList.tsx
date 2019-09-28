@@ -8,6 +8,9 @@ import pages from './index';
 import {navigate} from 'controller/app';
 interface Props {}
 export default class PageList extends Page<Props> {
+  static routeConfig = {
+    name: 'PageList',
+  };
   constructor(props: any) {
     super(props);
   }

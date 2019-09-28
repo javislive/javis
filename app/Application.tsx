@@ -15,7 +15,7 @@ import {NavigationState} from 'react-navigation';
 import {View} from 'react-native-ui';
 import router from 'router';
 import brain from 'brain';
-const INTIAL_ROUTE_NAME = BuildConfig.env === 'dev' ? 'PageList' : 'StartPage';
+const INTIAL_ROUTE_NAME = BuildConfig.env === 'dev' ? 'PageList' : 'Main';
 export interface State {
   navigation: number;
   ready: boolean;

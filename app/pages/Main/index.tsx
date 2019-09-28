@@ -10,6 +10,9 @@ import {dispatch} from 'febrest';
 interface Props {}
 let socket: number;
 export default class Main extends Page<Props> {
+  static routeConfig = {
+    name: 'Main',
+  };
   constructor(props: any) {
     super(props);
   }
