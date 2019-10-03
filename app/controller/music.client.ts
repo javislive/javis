@@ -2,15 +2,20 @@ import {KeyEvent} from 'native';
 import Application from 'celtics/Application';
 import CMD from 'brain/CMD';
 import {State} from 'febrest';
-const app: any = Application.getInstance();
-const brain = app.brain;
+
 export function nextSong() {
+  const app: any = Application.getInstance();
+  const brain = app.brain;
   brain.send(CMD.MUSIC_NEXT);
 }
 export function preSong() {
+  const app: any = Application.getInstance();
+  const brain = app.brain;
   brain.send(CMD.MUSIC_PREVIEW);
 }
 export function playStop() {
+  const app: any = Application.getInstance();
+  const brain = app.brain;
   const musicState = State('music').get();
   if (!musicState || musicState.status != 'playing') {
     brain.send(CMD.MUSIC_PLAY);

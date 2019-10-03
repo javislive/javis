@@ -6,6 +6,7 @@ import SSocket from './modules/SSocket';
 import SSocketServer from './modules/SSocketServer';
 import Switch from './views/Switch';
 import UserAgent from './modules/UserAgent';
+import Network from './modules/Network';
 
 export {
   UserAgent,
@@ -16,4 +17,5 @@ export {
   SSocket,
   SSocketServer,
   KeyEvent,
+  Network,
 };

@@ -6,6 +6,7 @@ class Brain {
   constructor() {}
   init() {
     SSocket.onopen = () => {
+      console.log('client is open');
       dispatch(playStop);
     };
     SSocket.onerror = function(data) {
@@ -16,7 +17,7 @@ class Brain {
       console.log('message from server');
       console.log(data);
     };
-    SSocket.open('192.168.0.102', 1998);
+    SSocket.open('192.168.0.102', 1988);
   }
   onCMD(cmd: string) {}
   send(message: string, payload?: any) {

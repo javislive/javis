@@ -31,7 +31,9 @@ class Brain {
     SSocketServer.listen(PORT);
   }
   onCMD(data: any) {
-    const {message, payload} = data;
+    console.log('data', data);
+    data = JSON.parse(data.data || '{}');
+    const {message, paylod} = data;
     switch (message) {
       case CMD.MUSIC_PLAY:
         dispatch(playStop);

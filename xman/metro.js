@@ -47,6 +47,7 @@ function metro(env, platform) {
         controller: path.resolve(root, './app/controller'),
         state: path.resolve(root, './app/state'),
         celtics: path.resolve(root, './app/celtics'),
+        brain: path.resolve(root, './app/brain'),
       },
     },
     projectRoot: path.resolve(root),

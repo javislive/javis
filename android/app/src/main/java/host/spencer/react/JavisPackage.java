@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import host.spencer.react.modules.RCTKeyEventManager;
+import host.spencer.react.modules.RCTNetworkManager;
 import host.spencer.react.modules.RCTSocketServerManager;
 import host.spencer.react.modules.RCTSokcetClientManager;
 
@@ -22,12 +23,11 @@ public class JavisPackage implements ReactPackage {
     @Nonnull
     @Override
     public List<NativeModule> createNativeModules(@Nonnull ReactApplicationContext reactContext) {
-        return  Arrays.<NativeModule>asList(new RCTSocketServerManager(reactContext), new RCTSokcetClientManager(reactContext),new RCTKeyEventManager(reactContext));
+        return  Arrays.<NativeModule>asList(new RCTSocketServerManager(reactContext), new RCTSokcetClientManager(reactContext),new RCTKeyEventManager(reactContext),new RCTNetworkManager(reactContext));
     }
 
     /**
      * @param reactContext
-     * @return a list of view managers that should be registered with {@link UIManagerModule}
      */
     @Nonnull
     @Override
