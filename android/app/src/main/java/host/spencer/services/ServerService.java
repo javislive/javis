@@ -42,6 +42,9 @@ public class ServerService extends Service {
         public void listen(int port) {
             mService.listen(port);
         }
+        public void close() {
+            mServer.close();
+        }
         public void setListener(ServerListener listener) {
             mService.mServer.setListener(listener);
         }
