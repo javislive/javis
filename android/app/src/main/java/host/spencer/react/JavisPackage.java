@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import host.spencer.react.modules.RCTAppManager;
+import host.spencer.react.modules.RCTAudioManager;
 import host.spencer.react.modules.RCTKeyEventManager;
 import host.spencer.react.modules.RCTNetworkManager;
 import host.spencer.react.modules.RCTSocketServerManager;
@@ -23,7 +25,14 @@ public class JavisPackage implements ReactPackage {
     @Nonnull
     @Override
     public List<NativeModule> createNativeModules(@Nonnull ReactApplicationContext reactContext) {
-        return  Arrays.<NativeModule>asList(new RCTSocketServerManager(reactContext), new RCTSokcetClientManager(reactContext),new RCTKeyEventManager(reactContext),new RCTNetworkManager(reactContext));
+        return Arrays.<NativeModule>asList(
+                new RCTSocketServerManager(reactContext),
+                new RCTSokcetClientManager(reactContext),
+                new RCTKeyEventManager(reactContext),
+                new RCTNetworkManager(reactContext),
+                new RCTAudioManager(reactContext),
+                new RCTAppManager(reactContext)
+        );
     }
 
     /**

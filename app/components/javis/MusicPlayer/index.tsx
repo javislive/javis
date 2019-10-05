@@ -1,6 +1,6 @@
 import React, {PureComponent, Fragment} from 'react';
 import {TouchableOpacity, View} from 'react-native-ui';
-import {nextSong, playStop, preSong} from 'controller/music';
+import {nextSong, musicStop, musicPlay, preSong} from 'controller/music';
 
 import Application from 'celtics/Application';
 import FontIcon from 'components/FontIcon';
@@ -27,12 +27,12 @@ export default class MusicPlayer extends PureComponent {
                     color="#fb3c4b"></FontIcon>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => dispatch(playStop)}
+                  onPress={() =>
+                    dispatch(musicState.playing ? musicStop : musicPlay)
+                  }
                   style={styles.button}>
                   <FontIcon
-                    icon={
-                      musicState.status === 'playing' ? '&#xe6a5;' : '&#xe6b3;'
-                    }
+                    icon={musicState.playing ? '&#xe6a5;' : '&#xe6b3;'}
                     size={50}
                     color="#fb3c4b"></FontIcon>
                 </TouchableOpacity>

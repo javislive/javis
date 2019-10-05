@@ -7,7 +7,8 @@ import SSocketServer from './modules/SSocketServer';
 import Switch from './views/Switch';
 import UserAgent from './modules/UserAgent';
 import Network from './modules/Network';
-
+import AppManger from './modules/AppManager';
+import AudioManger from './modules/AudioManager';
 export {
   UserAgent,
   Switch,
@@ -18,4 +19,6 @@ export {
   SSocketServer,
   KeyEvent,
   Network,
+  AppManger,
+  AudioManger,
 };

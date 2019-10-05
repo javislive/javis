@@ -1,25 +1,25 @@
 import {dispatch} from 'febrest';
 import {SSocketServer} from 'native';
 import CMD from './CMD';
-import {playStop, preSong, nextSong} from 'controller/music';
+import {musicStop, musicPlay, preSong, nextSong} from 'controller/music';
 
 class Brain {
-  socket: number | undefined;
+  sockets: number[] = [];
   constructor() {}
   init(port: number) {
     SSocketServer.onopen = function() {
       console.log('server is ready');
     };
-    SSocketServer.onconnect = data => {
+    SSocketServer.onconnect = event => {
       console.log('server is connect,');
-      this.socket = data.data.id;
+      this.onDeviceConnect(event.data);
     };
-    SSocketServer.onerror = function(data) {
+    SSocketServer.onerror = function(event) {
       console.log('server is error ');
-      dispatch(playStop);
+      dispatch(musicStop);
     };
-    SSocketServer.onmessage = (data: any) => {
-      this.onCMD(data.data);
+    SSocketServer.onmessage = (event: any) => {
+      this.onCMD(event.data);
     };
     SSocketServer.onclose = function() {
       console.log('server is closed');
@@ -33,12 +33,19 @@ class Brain {
     SSocketServer.close();
   }
   onCMD(data: any) {
-    console.log('data', data);
     data = JSON.parse(data.data || '{}');
     const {message, paylod} = data;
     switch (message) {
+      case CMD.SYS_CONNECT:
+        break;
+      case CMD.SYS_LOGIN:
+        break;
+      case CMD.SYS_LOGOUT:
+        break;
+      case CMD.DEVICE_ASYNC_MESSAGE:
+        break;
       case CMD.MUSIC_PLAY:
-        dispatch(playStop);
+        dispatch(musicPlay);
         break;
       case CMD.MUSIC_PREVIEW:
         dispatch(preSong);
@@ -47,17 +54,19 @@ class Brain {
         dispatch(nextSong);
         break;
       case CMD.MUSIC_PAUSE:
-        dispatch(playStop);
+        dispatch(musicStop);
         break;
     }
   }
 
-  send(message: string, payload?: any) {
-    if (!this.socket) {
-      return;
-    }
+  send(id: number, message: string, payload?: any) {
     let data = JSON.stringify({message, payload});
-    SSocketServer.send(this.socket, data);
+    SSocketServer.send(id, data);
+  }
+  private onDeviceConnect(data: any) {
+    const id = data.id;
+
+    this.sockets.push(data.id);
   }
 }
 export default new Brain();

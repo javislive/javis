@@ -1,3 +1,4 @@
+import {musicPlay} from 'controller/music';
 import {KeyEvent} from 'native';
 import Application from 'celtics/Application';
 import CMD from 'brain/CMD';
@@ -13,19 +14,19 @@ export function preSong() {
   const brain = app.brain;
   brain.send(CMD.MUSIC_PREVIEW);
 }
-export function playStop() {
+export function musicStop() {
   const app: any = Application.getInstance();
   const brain = app.brain;
-  const musicState = State('music').get();
-  if (!musicState || musicState.status != 'playing') {
-    brain.send(CMD.MUSIC_PLAY);
-    State('music').set({
-      status: 'playing',
-    });
-  } else {
-    brain.send(CMD.MUSIC_PAUSE);
-    State('music').set({
-      status: 'pause',
-    });
-  }
+  brain.send(CMD.MUSIC_PAUSE);
+  State('music').set({
+    playing: false,
+  });
+}
+export function musicPlay() {
+  const app: any = Application.getInstance();
+  const brain = app.brain;
+  brain.send(CMD.MUSIC_PLAY);
+  State('music').set({
+    playing: true,
+  });
 }

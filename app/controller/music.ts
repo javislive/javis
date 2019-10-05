@@ -8,19 +8,17 @@ export function nextSong() {
 export function preSong() {
   KeyEvent.dispatch(KeyCode.KEYCODE_MEDIA_PREVIOUS);
 }
-export function playStop() {
-  const musicState = State('music').get();
-  if (!musicState || musicState.status != 'playing') {
-    KeyEvent.dispatch(KeyCode.KEYCODE_MEDIA_PLAY);
-    State('music').set({
-      status: 'playing',
-    });
-  } else {
-    KeyEvent.dispatch(KeyCode.KEYCODE_MEDIA_PAUSE);
-    State('music').set({
-      status: 'pause',
-    });
-  }
+export function musicStop() {
+  KeyEvent.dispatch(KeyCode.KEYCODE_MEDIA_PAUSE);
+  State('music').set({
+    playing: false,
+  });
+}
+export function musicPlay() {
+  KeyEvent.dispatch(KeyCode.KEYCODE_MEDIA_PLAY);
+  State('music').set({
+    playing: true,
+  });
 }
 
 //检查音乐播放器是否活着

@@ -19,6 +19,7 @@ State.batch({
     },
   },
 });
+
 const SYNYC_MAP = [state.config];
 
 export default state;

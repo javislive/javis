@@ -1,13 +1,13 @@
 import {dispatch} from 'febrest';
 import {SSocket} from 'native';
 import CMD from './CMD';
-import {playStop} from 'controller/music';
+import {musicPlay} from 'controller/music';
 class Brain {
   constructor() {}
   init() {
     SSocket.onopen = () => {
       console.log('client is open');
-      dispatch(playStop);
+      dispatch(musicPlay);
     };
     SSocket.onerror = function(data) {
       console.log('client is error');
@@ -22,7 +22,28 @@ class Brain {
   destroy() {
     SSocket.close();
   }
-  onCMD(cmd: string) {}
+  onCMD(data: any) {
+    data = JSON.parse(data.data || '{}');
+    const {message, paylod} = data;
+    switch (message) {
+      case CMD.SYS_CONNECT:
+        break;
+      case CMD.SYS_LOGIN:
+        break;
+      case CMD.SYS_LOGOUT:
+        break;
+      case CMD.DEVICE_ASYNC_MESSAGE:
+        break;
+      case CMD.MUSIC_PLAY:
+        break;
+      case CMD.MUSIC_PREVIEW:
+        break;
+      case CMD.MUSIC_NEXT:
+        break;
+      case CMD.MUSIC_PAUSE:
+        break;
+    }
+  }
   send(message: string, payload?: any) {
     let data = JSON.stringify({message, payload});
     SSocket.send(data);
