@@ -14,6 +14,9 @@ class SockerServer {
   send(socket: number, message: string) {
     SocketServerManager.send(socket, message);
   }
+  close() {
+    SocketServerManager.close();
+  }
 }
 
 DeviceEventEmitter.addListener('socket_server_ready', function(data: any) {

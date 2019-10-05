@@ -1,4 +1,5 @@
-import {bordercast} from 'febrest';
+import {bordercast, State} from 'febrest';
+import state from 'state';
 
 export function toast(data: any) {
   bordercast('sys.toast', data);
@@ -15,4 +16,8 @@ export function navigationReset(data: any) {
 }
 export function navigationGoBack(data: any) {
   bordercast('sys.navigation.goBack', data);
+}
+
+export function setConfig(data: any) {
+  State(state.config).set(data);
 }

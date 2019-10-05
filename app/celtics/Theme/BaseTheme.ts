@@ -1,5 +1,5 @@
-import { Dimensions, Platform } from 'react-native';
-import { px2dp, resize, vh, vw } from 'utils/resize';
+import {Dimensions, Platform} from 'react-native';
+import {px2dp, resize, vh, vw} from 'utils/resize';
 
 const IOS = Platform.OS === 'ios';
 const clientWidth = Dimensions.get('window').width;
@@ -34,12 +34,12 @@ export interface ITheme {
    * navigationHeader style
    */
   navigationHeaderHeight?: number;
+  navigationHeaderMarginTop?: number;
   navigationHeaderPaddingTop?: number;
   navigationHeaderBackgroundColor?: string;
   navigationHeaderColor?: string;
   navigationHeaderFontSize?: number;
-  navigationHeaderLeftButtonMargin?: number;
-  navigationHeaderRightButtonMargin?: number;
+  navigationHeaderButtonMargin?: number;
   /**
    * navigationHeader style end
    */
@@ -77,19 +77,19 @@ const BaseTheme: ITheme = {
   placeholderColor: '#D1D1D6',
   disabledColor: '#ccc',
 
-  navigationHeaderHeight: resize(54),
+  navigationHeaderHeight: 44,
+  navigationHeaderMarginTop: 20,
   navigationHeaderPaddingTop: 0,
-  navigationHeaderBackgroundColor: '#F4F5F7',
+  navigationHeaderBackgroundColor: '#fff',
   navigationHeaderColor: '#333',
-  navigationHeaderFontSize: resize(17),
-  navigationHeaderLeftButtonMargin: resize(20),
-  navigationHeaderRightButtonMargin: resize(20),
+  navigationHeaderFontSize: 14,
+  navigationHeaderButtonMargin: 10,
 
   pageWrapper: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#EFEFF3',
-    paddingTop: 35
+    paddingTop: 35,
   },
   boxShadow: {
     shadowColor: '#ccc',
@@ -97,9 +97,9 @@ const BaseTheme: ITheme = {
     elevation: 10,
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
-    shadowOpacity: 0.45
+    shadowOpacity: 0.45,
   },
 
   toastWrapper: {
@@ -112,13 +112,13 @@ const BaseTheme: ITheme = {
     bottom: vh(60),
     width: vw(75),
     left: vw(12.5),
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   toastText: {
     color: '#fff',
     fontSize: 13,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 };
 
 export default BaseTheme;

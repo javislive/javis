@@ -3,11 +3,10 @@ import {SSocketServer} from 'native';
 import CMD from './CMD';
 import {playStop, preSong, nextSong} from 'controller/music';
 
-const PORT = 1988;
 class Brain {
   socket: number | undefined;
   constructor() {}
-  init() {
+  init(port: number) {
     SSocketServer.onopen = function() {
       console.log('server is ready');
     };
@@ -25,10 +24,13 @@ class Brain {
     SSocketServer.onclose = function() {
       console.log('server is closed');
       setTimeout(() => {
-        SSocketServer.listen(PORT);
+        SSocketServer.listen(port);
       }, 5 * 60000);
     };
-    SSocketServer.listen(PORT);
+    SSocketServer.listen(port);
+  }
+  destroy() {
+    SSocketServer.close();
   }
   onCMD(data: any) {
     console.log('data', data);

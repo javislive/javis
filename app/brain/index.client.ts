@@ -19,6 +19,9 @@ class Brain {
     };
     SSocket.open('192.168.0.102', 1988);
   }
+  destroy() {
+    SSocket.close();
+  }
   onCMD(cmd: string) {}
   send(message: string, payload?: any) {
     let data = JSON.stringify({message, payload});

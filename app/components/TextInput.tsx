@@ -2,14 +2,14 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   TextInputFocusEventData,
-  TextInputProps
+  TextInputProps,
 } from 'react-native';
-import React, { Component, PureComponent, ReactComponentElement } from 'react';
-import { TextInput, TouchableOpacity, View } from 'react-native-ui';
-import { ThemeConsumer, createStyle } from 'themes';
+import React, {Component, PureComponent, ReactComponentElement} from 'react';
+import {TextInput, TouchableOpacity, View} from 'react-native-ui';
 
 import FontIcon from './FontIcon';
-import { vw } from 'utils/resize';
+import {vw} from 'utils/resize';
+import Application from 'celtics/Application';
 
 export interface Props extends TextInputProps {
   leftChild?: ReactComponentElement<any, any>;
@@ -27,7 +27,7 @@ class Input extends PureComponent<Props, State> {
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
     if (nextProps.value !== undefined) {
       return {
-        value: nextProps.value
+        value: nextProps.value,
       };
     }
     return null;
@@ -36,45 +36,45 @@ class Input extends PureComponent<Props, State> {
   state: State = {
     focus: false,
     secureTextVisible: false,
-    value: ''
+    value: '',
   };
   private _input: any;
   private _onChange = (
-    event: NativeSyntheticEvent<TextInputChangeEventData>
+    event: NativeSyntheticEvent<TextInputChangeEventData>,
   ) => {
     let value = event.nativeEvent.text;
-    let { onChangeText, onChange, value: propsValue } = this.props;
+    let {onChangeText, onChange, value: propsValue} = this.props;
     onChangeText && onChangeText(value);
     onChange && onChange(event);
     if (propsValue === undefined) {
-      this.setState({ value });
+      this.setState({value});
     }
   };
   private _toggleSecureTextVisible = () => {
     this.setState({
-      secureTextVisible: !this.state.secureTextVisible
+      secureTextVisible: !this.state.secureTextVisible,
     });
   };
   private _onFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    let { onFocus } = this.props;
+    let {onFocus} = this.props;
     this.setState(
       {
-        focus: true
+        focus: true,
       },
       () => {
         onFocus && onFocus(e);
-      }
+      },
     );
   };
   private _onBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    let { onBlur } = this.props;
+    let {onBlur} = this.props;
     this.setState(
       {
-        focus: false
+        focus: false,
       },
       () => {
         onBlur && onBlur(e);
-      }
+      },
     );
   };
   private _clear() {
@@ -84,29 +84,16 @@ class Input extends PureComponent<Props, State> {
      * ios下未测试
      * 如果后续rn修复该bug可以移除下面这段避免重复触发
      */
-    this._onChange({ nativeEvent: { text: '', target: this._input } });
+    this._onChange({nativeEvent: {text: '', target: this._input}});
   }
   render() {
-    const { leftChild, rightChild, style } = this.props;
-    const { focus } = this.state;
+    const {leftChild, rightChild, style} = this.props;
     return (
-      <ThemeConsumer>
-        {theme => {
-          return (
-            <View
-              style={[
-                styles.wrapper,
-                style,
-                { borderColor: focus ? theme.themeColor : 'transparent' }
-              ]}
-            >
-              {leftChild || null}
-              {this._renderInput()}
-              {rightChild || null}
-            </View>
-          );
-        }}
-      </ThemeConsumer>
+      <View style={[styles.wrapper, style]}>
+        {leftChild || null}
+        {this._renderInput()}
+        {rightChild || null}
+      </View>
     );
   }
   private _renderInput(): ReactComponentElement<any, any> {
@@ -127,11 +114,11 @@ class Input extends PureComponent<Props, State> {
       ref = (v: any) => {
         forwardedRef(v);
         this._input = {
-          current: v
+          current: v,
         };
       };
     }
-    let { focus, value, secureTextVisible } = this.state;
+    let {focus, value, secureTextVisible} = this.state;
     return (
       <View style={[styles.inputWrapper]}>
         <TextInput
@@ -152,8 +139,7 @@ class Input extends PureComponent<Props, State> {
           <TouchableOpacity
             activeOpacity={1}
             onPress={this._toggleSecureTextVisible}
-            style={styles.secureTextVisibleEye}
-          >
+            style={styles.secureTextVisibleEye}>
             <FontIcon
               icon={secureTextVisible ? '&#xe603;' : '&#xe604;'}
               color="#dbdbdb"
@@ -166,8 +152,7 @@ class Input extends PureComponent<Props, State> {
             onPress={() => {
               !secureTextEntry && value && this._clear();
             }}
-            style={styles.secureTextVisibleEye}
-          >
+            style={styles.secureTextVisibleEye}>
             {showClearButton ? (
               <FontIcon
                 icon="&#xe607;"
@@ -182,20 +167,18 @@ class Input extends PureComponent<Props, State> {
   }
 }
 
-const styles = createStyle(theme => ({
+const styles = Application.createStyle(theme => ({
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     height: theme.defaultHeight,
     width: theme.defaultWidth,
     backgroundColor: '#fff',
-    borderColor: theme.borderColor,
-    borderBottomWidth: theme.px
   },
   inputWrapper: {
     flexDirection: 'row',
     flex: 1,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   input: {
     lineHeight: theme.defaultHeight,
@@ -203,12 +186,12 @@ const styles = createStyle(theme => ({
     flex: 1,
     padding: 0,
     fontSize: theme.f3,
-    color: '#333'
+    color: '#333',
   },
   secureTextVisibleEye: {
     justifyContent: 'center',
-    alignContent: 'center'
-  }
+    alignContent: 'center',
+  },
 }));
 export default React.forwardRef((props: Props, ref) => {
   return <Input {...props} forwardedRef={ref} />;

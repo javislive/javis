@@ -1,4 +1,4 @@
-import {FlatList, Text, TouchableOpacity} from 'react-native';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import Page, {PageClass} from 'celtics/Page';
 
 import Application from 'celtics/Application';
@@ -10,6 +10,7 @@ interface Props {}
 export default class PageList extends Page<Props> {
   static routeConfig = {
     name: 'PageList',
+    header: null,
   };
   constructor(props: any) {
     super(props);
@@ -18,17 +19,21 @@ export default class PageList extends Page<Props> {
     return (
       <TouchableOpacity
         style={{
-          height: 60,
+          height: 44,
           paddingLeft: 20,
-          borderBottomWidth: Application.getTheme().px,
-          borderBottomColor: '#fefefe',
-          justifyContent: 'center',
         }}
-        key={item.name}
         onPress={() => {
           dispatch(navigate, {routeName: item.name});
         }}>
-        <Text>{item.name}</Text>
+        <View
+          style={{
+            flex: 1,
+            borderBottomWidth: Application.getTheme().px,
+            borderBottomColor: Application.getTheme().borderColor,
+            justifyContent: 'center',
+          }}>
+          <Text>{item.name}</Text>
+        </View>
       </TouchableOpacity>
     );
   }

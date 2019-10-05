@@ -1,4 +1,4 @@
-import BaseTheme, { ITheme } from './BaseTheme';
+import BaseTheme, {ITheme} from './BaseTheme';
 
 import StyleSheet from './StyleSheet';
 
@@ -7,7 +7,7 @@ export interface ThemeProviderProps {
   theme: any;
 }
 
-let THEME: ITheme = { ...BaseTheme };
+let THEME: ITheme = {...BaseTheme};
 
 function addTheme(theme: ITheme) {
   THEME = Object.assign({}, THEME, theme);
@@ -15,10 +15,10 @@ function addTheme(theme: ITheme) {
   notifyThemeChange();
 }
 function clearTheme() {
-  THEME = { ...BaseTheme };
+  THEME = {...BaseTheme};
   StyleSheet.setTheme(THEME);
 }
-const THEME_CHANGE_LISTENERS: { [idx: string]: () => void } = {};
+const THEME_CHANGE_LISTENERS: {[idx: string]: () => void} = {};
 let THEME_LISTENER_KEY = 1;
 
 function onThemeChange(l: () => void): string {
@@ -41,7 +41,7 @@ function createStyle<T>(styleCreator: (theme: ITheme) => T): T {
 function getTheme(): ITheme {
   return THEME;
 }
-
+addTheme(BaseTheme);
 export {
   createStyle,
   clearTheme,
@@ -50,5 +50,5 @@ export {
   removeThemeChange,
   addTheme,
   ITheme,
-  getTheme
+  getTheme,
 };

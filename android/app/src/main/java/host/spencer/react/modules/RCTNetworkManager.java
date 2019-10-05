@@ -32,12 +32,7 @@ import host.spencer.receivers.NetworkReceiver;
 public class RCTNetworkManager extends ReactContextBaseJavaModule  implements NetworkReceiver.WifiStateChangeCallback {
     public RCTNetworkManager(@Nonnull ReactApplicationContext reactContext) {
         super(reactContext);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
-        reactContext.registerReceiver(new NetworkReceiver(this), filter);
+
 
     }
 
@@ -63,7 +58,14 @@ public class RCTNetworkManager extends ReactContextBaseJavaModule  implements Ne
             return networkInfo != null && networkInfo.isConnected();
         }
     }
-
+    @ReactMethod void init() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
+        getReactApplicationContext().registerReceiver(new NetworkReceiver(this), filter);
+    }
     @ReactMethod
     public void getNetInfo(Promise promise) {
         ConnectivityManager mgr = (ConnectivityManager) getCurrentActivity()
