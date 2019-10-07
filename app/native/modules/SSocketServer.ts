@@ -14,6 +14,9 @@ class SockerServer {
   send(socket: number, message: string) {
     SocketServerManager.send(socket, message);
   }
+  closeSocket(socket: number) {
+    SocketServerManager.closeSocket(socket);
+  }
   close() {
     SocketServerManager.close();
   }

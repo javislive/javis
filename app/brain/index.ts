@@ -1,10 +1,13 @@
-import {dispatch} from 'febrest';
+import {dispatch, State} from 'febrest';
 import {SSocketServer} from 'native';
 import CMD from './CMD';
 import {musicStop, musicPlay, preSong, nextSong} from 'controller/music';
+import state from 'state';
+import ACTION from './ACTION';
 
 class Brain {
   sockets: number[] = [];
+  authQueue: {[key: number]: any} = {};
   constructor() {}
   init(port: number) {
     SSocketServer.onopen = function() {
@@ -12,7 +15,7 @@ class Brain {
     };
     SSocketServer.onconnect = event => {
       console.log('server is connect,');
-      this.onDeviceConnect(event.data);
+      this.onConnect(event.data);
     };
     SSocketServer.onerror = function(event) {
       console.log('server is error ');
@@ -33,14 +36,18 @@ class Brain {
     SSocketServer.close();
   }
   onCMD(data: any) {
+    let id = data.id;
     data = JSON.parse(data.data || '{}');
-    const {message, paylod} = data;
+    const {message, payload} = data;
     switch (message) {
       case CMD.SYS_CONNECT:
+        this.onDeviceConnect(id, payload);
         break;
       case CMD.SYS_LOGIN:
+        this.onDeviceLogin(id, payload);
         break;
       case CMD.SYS_LOGOUT:
+        this.onDeviceLogout(id);
         break;
       case CMD.DEVICE_ASYNC_MESSAGE:
         break;
@@ -63,10 +70,29 @@ class Brain {
     let data = JSON.stringify({message, payload});
     SSocketServer.send(id, data);
   }
-  private onDeviceConnect(data: any) {
+  private onDeviceConnect(id: number, payload: any) {}
+  private onConnect(data: any) {
     const id = data.id;
-
-    this.sockets.push(data.id);
+    this.waitForLogin(id);
+  }
+  private waitForLogin(id: number) {
+    this.authQueue[id] = setTimeout(() => {
+      SSocketServer.closeSocket(id);
+    }, 5000);
+  }
+  private onDeviceLogin(id: number, payload: any) {
+    clearTimeout(this.authQueue[id]);
+    this.send(id, CMD.DEVICE_ASYNC_MESSAGE, this.getDeviceAsyncMessage());
+    //验证逻辑以后补充
+  }
+  private onDeviceLogout(id: number) {
+    SSocketServer.closeSocket(id);
+  }
+  private getDeviceAsyncMessage() {
+    const music = State(state.music).get();
+    return {
+      music,
+    };
   }
 }
 export default new Brain();

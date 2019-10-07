@@ -82,6 +82,14 @@ public class RCTSocketServerManager extends ReactContextBaseJavaModule implement
         binder.close();
     }
     @ReactMethod
+    public  void closeSocket(Integer socketId) {
+        SSocket sSocket = sockets.get(socketId);
+        if(sSocket!=null) {
+            sSocket.close();
+        }
+
+    }
+    @ReactMethod
     public void send(Integer socketId,String message) {
         SSocket sSocket = sockets.get(socketId);
         if(sSocket!=null) {
