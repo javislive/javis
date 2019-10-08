@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+const os = require('os');
 const args = process.argv.slice(2);
 const cmd = args.shift();
 const shelljs = require('shelljs');
@@ -7,8 +7,9 @@ const path = require('path');
 const metro = require('./metro');
 const fs = require('fs');
 
-const platform = args.shift() === '-c' ? 'client' : 'server';
-function buildMetro(env) {
+args.forEach(arg => {});
+const falvors = args.shift() === '-c' ? ['client'] : ['server', 'client'];
+function buildMetro(env, platform) {
   const config = metro(env, platform);
   const data = `module.exports=${JSON.stringify(config, null, '\t')}`;
   fs.writeFileSync(
@@ -18,24 +19,38 @@ function buildMetro(env) {
   );
 }
 function start() {
-  buildMetro('debug');
+  buildMetro('debug', falvors[0]);
   shelljs.exec('react-native start');
 }
-function uat() {
-  buildMetro('uat');
+
+function relaseAndroid(buildType, falvors) {
+  let buildCMD = buildType[0].toUpperCase() + buildType.slice(1);
+  if (buildType === 'prod') {
+    buildCMD = 'Release';
+  }
+  falvors.forEach(falvors => {
+    buildMetro(buildType, falvor);
+    falvor = falvor[0].toUpperCase() + falvor.slice(1);
+    if (os.type() === 'Windows_NT') {
+      shelljs.exec(`android/gradlew assemble${buildCMD}${falvor}`);
+    } else {
+      shelljs.exec(`./android/gradlew assemble${buildCMD}${falvor}`);
+    }
+  });
 }
-function release() {
-  buildMetro('prod');
+function release(buildType, platform) {
+  if (platform === 'android') {
+    relaseAndroid('uat', platform);
+  }
 }
-function relaseAndroid(buildType, falvors) {}
 function run() {
   switch (cmd) {
     case 'start':
       return start();
-    case 'uat':
-      return uat();
-    case 'relase':
-      return release();
+    case 'release':
+      return release('uat', platform);
+    case 'android-release':
+      return relaseAndroid('prod', platform);
     default:
       break;
   }
