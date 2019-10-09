@@ -6,9 +6,29 @@ const shelljs = require('shelljs');
 const path = require('path');
 const metro = require('./metro');
 const fs = require('fs');
-
-args.forEach(arg => {});
-const falvors = args.shift() === '-c' ? ['client'] : ['server', 'client'];
+const {execSync} = require('child_process');
+let platform = 'android';
+let falvors = ['server', 'client'];
+for (let i = 0; i < args.length; i++) {
+  let arg = args[i];
+  if (arg[0] == '-') {
+    arg = arg.slice(1);
+    i++;
+    let v = args[i];
+    switch (arg) {
+      case 't':
+        falvors =
+          v == 'client'
+            ? ['client']
+            : (v = 'server' ? ['server'] : ['server', 'client']);
+        break;
+      case 'p':
+        platform = v || platform;
+        break;
+    }
+  }
+}
+// const falvors = args.shift() === '-c' ? ['client'] : ['server', 'client'];
 function buildMetro(env, platform) {
   const config = metro(env, platform);
   const data = `module.exports=${JSON.stringify(config, null, '\t')}`;
@@ -28,29 +48,29 @@ function relaseAndroid(buildType, falvors) {
   if (buildType === 'prod') {
     buildCMD = 'Release';
   }
-  falvors.forEach(falvors => {
+  process.chdir('android');
+  const cmd = process.platform.startsWith('win') ? 'gradlew.bat' : './gradlew';
+
+  falvors.forEach(falvor => {
     buildMetro(buildType, falvor);
     falvor = falvor[0].toUpperCase() + falvor.slice(1);
-    if (os.type() === 'Windows_NT') {
-      shelljs.exec(`android/gradlew assemble${buildCMD}${falvor}`);
-    } else {
-      shelljs.exec(`./android/gradlew assemble${buildCMD}${falvor}`);
-    }
+
+    shelljs.exec(`${cmd} assemble${falvor}${buildCMD}`);
   });
 }
-function release(buildType, platform) {
+function release(buildType, platform, falvors) {
   if (platform === 'android') {
-    relaseAndroid('uat', platform);
+    relaseAndroid(buildType, falvors);
   }
 }
 function run() {
   switch (cmd) {
     case 'start':
       return start();
+    case 'uat':
+      return release('uat', platform, falvors);
     case 'release':
-      return release('uat', platform);
-    case 'android-release':
-      return relaseAndroid('prod', platform);
+      return release('prod', platform, falvors);
     default:
       break;
   }
