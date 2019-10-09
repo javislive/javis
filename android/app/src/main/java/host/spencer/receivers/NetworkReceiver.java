@@ -10,7 +10,12 @@ import android.util.Log;
 
 public class NetworkReceiver extends BroadcastReceiver {
     private WifiStateChangeCallback wifiStateChangeCallback;
+    public NetworkReceiver (){
+    }
     public NetworkReceiver (WifiStateChangeCallback wifiStateChangeCallback){
+        this.wifiStateChangeCallback = wifiStateChangeCallback;
+    }
+    public void setWifiStateChangeCallback(WifiStateChangeCallback wifiStateChangeCallback){
         this.wifiStateChangeCallback = wifiStateChangeCallback;
     }
     @Override
@@ -26,7 +31,7 @@ public class NetworkReceiver extends BroadcastReceiver {
             }
         }
    }
-   public interface WifiStateChangeCallback {
+   public static interface WifiStateChangeCallback {
         void onWifiStateChange(boolean isActive);
    }
 }
