@@ -1,13 +1,13 @@
-import React, { PureComponent, Component, ReactElement } from 'react';
+import React, {Component, PureComponent, ReactElement} from 'react';
 interface Props {
-  render?: (children: any[]) => any;
+  render?: (children: any[], props: any) => any;
 }
 interface State {
   children: Child[];
 }
 class Container extends Component<Props> {
   state: State = {
-    children: []
+    children: [],
   };
   insert(child: Child) {
     this.state.children.push(child);
@@ -22,14 +22,15 @@ class Container extends Component<Props> {
       }
       return true;
     });
-    this.setState({ children });
+    this.setState({children});
     this.forceUpdate();
   }
   update() {
     this.forceUpdate();
   }
   render() {
-    return this.props.render(this.state.children);
+    const render = this.props.render;
+    return render ? render(this.state.children, this.props) : null;
   }
 }
 interface ChildProps {
@@ -57,9 +58,9 @@ class Child extends PureComponent<ChildProps> {
   }
 }
 
-function createPortal(render?: (children: any) => any) {
+function createPortal(render?: (children: any, props: any) => any) {
   let container: Container | null;
-  function Portal({ render: propsRender }: Props) {
+  function Portal({render: propsRender}: Props) {
     // if (container !== undefined) {
     //   throw new Error('Portal repeat');
     // }
@@ -99,8 +100,8 @@ function createPortal(render?: (children: any) => any) {
   }
   return {
     Portal,
-    Component: PortalComponent
+    Component: PortalComponent,
   };
 }
 
-export { createPortal };
+export {createPortal};

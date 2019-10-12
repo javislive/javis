@@ -19,6 +19,9 @@ export interface RouteConfig {
   header?: null | JSX.Element;
 }
 class Page<T = {}, C = {}> extends PureComponent<Props & T, C> {
+  constructor(props: Props & T) {
+    super(props);
+  }
   static LoadingView() {
     return <View style={{flex: 1, backgroundColor: '#f4f4f4'}}></View>;
   }

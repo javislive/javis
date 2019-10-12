@@ -7,9 +7,9 @@ import {
 import React, {Component, PureComponent, ReactComponentElement} from 'react';
 import {TextInput, TouchableOpacity, View} from 'react-native-ui';
 
+import Application from 'celtics/Application';
 import FontIcon from './FontIcon';
 import {vw} from 'utils/resize';
-import Application from 'celtics/Application';
 
 export interface Props extends TextInputProps {
   leftChild?: ReactComponentElement<any, any>;
