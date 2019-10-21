@@ -4,10 +4,24 @@
  *
  */
 const path = require('path');
-const root = path.resolve(__dirname, '../');
+const fs = require('fs');
+const {resolve} = path;
+const root = resolve(__dirname, '../');
+const APP_PATH = resolve(root, 'app');
+
 function pathResolve(path) {
   return path.resolve(root, path);
 }
+
+const extraNodeModules = {};
+
+fs.readdirSync(APP_PATH).forEach(name => {
+  const ap = resolve(APP_PATH, name);
+  if (fs.statSync(ap).isDirectory()) {
+    extraNodeModules[name] = ap;
+  }
+});
+
 function metro(env, platform) {
   return {
     transformer: {
@@ -29,28 +43,9 @@ function metro(env, platform) {
         'ts',
         'tsx',
       ],
-      extraNodeModules: {
-        'react-native-ui': path.resolve(root, './app/react-native-ui'),
-        brand: path.resolve(root, './app/brand'),
-        services: path.resolve(root, './app/services'),
-        context: path.resolve(root, './app/context'),
-        native: path.resolve(root, './app/native'),
-        utils: path.resolve(root, './app/utils'),
-        assets: path.resolve(root, './app/assets'),
-        themes: path.resolve(root, './app/themes'),
-        components: path.resolve(root, './app/components'),
-        router: path.resolve(root, './app/router'),
-        BuildConfig: path.resolve(root, './app/BuildConfig'),
-        pages: path.resolve(root, './app/pages'),
-        constants: path.resolve(root, './app/constants'),
-        store: path.resolve(root, './app/store'),
-        controller: path.resolve(root, './app/controller'),
-        state: path.resolve(root, './app/state'),
-        celtics: path.resolve(root, './app/celtics'),
-        brain: path.resolve(root, './app/brain'),
-      },
+      extraNodeModules,
     },
-    projectRoot: path.resolve(root),
+    projectRoot: root,
   };
 }
 module.exports = metro;
