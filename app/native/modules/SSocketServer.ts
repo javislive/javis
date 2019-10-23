@@ -1,13 +1,13 @@
-import {NativeModules, DeviceEventEmitter} from 'react-native';
+import {DeviceEventEmitter, NativeModules} from 'react-native';
 
 let SocketServerManager = NativeModules.SocketServerManager;
 
 class SockerServer {
-  onopen: undefined | (() => void);
+  onopen: undefined | ((data: any) => void);
   onconnect: undefined | ((data: any) => void);
   onmessage: undefined | ((message: String) => void);
   onerror: undefined | ((error: any) => void);
-  onclose: undefined | (() => void);
+  onclose: undefined | ((data: any) => void);
   listen(port: number) {
     SocketServerManager.listen(port);
   }
@@ -35,7 +35,7 @@ DeviceEventEmitter.addListener('socket_server_message', function(data: any) {
   server.onmessage && server.onmessage(data);
 });
 DeviceEventEmitter.addListener('socket_socket_close', function(data: any) {
-  server.onclose && server.onclose();
+  server.onclose && server.onclose(data);
 });
 const server = new SockerServer();
 export default server;

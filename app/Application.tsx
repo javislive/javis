@@ -6,16 +6,19 @@ import {
   Platform,
 } from 'react-native';
 import React, {RefObject, createRef} from 'react';
-import {bordercast, plugin, subscribe, State} from 'febrest';
+import {State, bordercast, dispatch, plugin, subscribe} from 'febrest';
+import {connect, init} from 'controller/application';
 
 import Application from 'celtics/Application';
 import BuildConfig from 'BuildConfig';
 import Navigation from 'celtics/Navigation';
 import {NavigationState} from 'react-navigation';
 import {View} from 'react-native-ui';
-import router from 'router';
 import brain from 'brain';
+import message from 'Message';
+import router from 'router';
 import state from 'state';
+
 const INTIAL_ROUTE_NAME = BuildConfig.env === 'dev' ? 'PageList' : 'Main';
 export interface State {
   navigation: number;
@@ -30,7 +33,6 @@ class App extends Application {
     ready: false,
     routeName: INTIAL_ROUTE_NAME,
   };
-  brain = brain;
   private navigaionRef: RefObject<Navigation> = createRef();
   onCreate() {
     super.onCreate();
@@ -46,9 +48,11 @@ class App extends Application {
       initialized: action => {},
       close: action => {},
     });
-    const config = State(state.config).get();
-    this.brain.init(config.net.port);
-    return state.persist();
+    return state.persist().then(() => {
+      const config = State(state.config).get();
+      message.connect(config && config.net, brain);
+      dispatch(init);
+    });
   }
   requestPermission() {
     return Platform.select({

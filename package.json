@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.2",
-    "febrest": "^0.11.16-autumn",
+    "febrest": "^0.11.17",
     "prop-types": "^15.7.2",
     "react": "16.8.6",
     "react-febrest": "^0.11.7",

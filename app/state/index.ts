@@ -2,14 +2,14 @@ import {State} from 'febrest';
 import persist from './persist';
 
 const state = {
-  music: 'music',
+  devices: 'devices',
   status: 'status',
   config: 'config',
   persist: function() {
     State.observe(function(event: any) {
-      persist({[event.key]: event.current}, SYNYC_MAP);
+      persist({[event.key]: event.current}, SYNC_MAP);
     });
-    return persist(null, SYNYC_MAP);
+    return persist(null, SYNC_MAP);
   },
 };
 State.batch({
@@ -20,6 +20,6 @@ State.batch({
   },
 });
 
-const SYNYC_MAP = [state.config];
+const SYNC_MAP = [state.config];
 
 export default state;
