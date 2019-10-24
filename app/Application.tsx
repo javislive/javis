@@ -6,8 +6,7 @@ import {
   Platform,
 } from 'react-native';
 import React, {RefObject, createRef} from 'react';
-import {State, bordercast, dispatch, plugin, subscribe} from 'febrest';
-import {connect, init} from 'controller/application';
+import {State, broadcast, dispatch, plugin, subscribe} from 'febrest';
 
 import Application from 'celtics/Application';
 import BuildConfig from 'BuildConfig';
@@ -15,6 +14,7 @@ import Navigation from 'celtics/Navigation';
 import {NavigationState} from 'react-navigation';
 import {View} from 'react-native-ui';
 import brain from 'brain';
+import {init} from 'controller/application';
 import message from 'Message';
 import router from 'router';
 import state from 'state';
@@ -99,7 +99,7 @@ class App extends Application {
             routeName: (data && data.routeName) || INTIAL_ROUTE_NAME,
           },
           () => {
-            bordercast('sys.navigation.change', []);
+            broadcast('sys.navigation.change', []);
           },
         );
       default:
@@ -129,7 +129,7 @@ class App extends Application {
 
     nextState: NavigationState,
   ) => {
-    bordercast('sys.navigation.change', nextState.routes);
+    broadcast('sys.navigation.change', nextState.routes);
   };
   _onTouchStart() {}
   _onTouchMove(e: GestureResponderEvent) {}

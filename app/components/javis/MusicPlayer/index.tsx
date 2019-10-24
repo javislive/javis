@@ -1,12 +1,12 @@
-import React, {PureComponent, Fragment} from 'react';
+import React, {Fragment, PureComponent} from 'react';
 import {TouchableOpacity, View} from 'react-native-ui';
-import {nextSong, musicStop, musicPlay, preSong} from 'controller/music';
 
 import Application from 'celtics/Application';
 import FontIcon from 'components/FontIcon';
+import MusicContext from 'context/MusicContext';
 import {dispatch} from 'febrest';
 import {resize} from 'utils/resize';
-import MusicContext from 'context/MusicContext';
+
 //          &#xe6b3;
 
 export default class MusicPlayer extends PureComponent {

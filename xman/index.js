@@ -71,6 +71,8 @@ function run() {
       return release('uat', platform, falvors);
     case 'release':
       return release('prod', platform, falvors);
+    case 'debug':
+      return release('debug', platform, falvors);
     default:
       break;
   }

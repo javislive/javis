@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./xman start",
     "android-release": "node ./xman release -p android",
+    "android-debug": "node ./xman debug -p android",
     "test": "jest"
   },
   "dependencies": {
