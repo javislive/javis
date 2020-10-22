@@ -1,6 +1,4 @@
-import {rejects} from 'assert';
 import {spawn, spawnSync} from 'child_process';
-import {resolve} from 'dns';
 import fs from 'fs';
 
 export function run(
@@ -42,15 +40,31 @@ export function readFile(path: string) {}
 export function readDir() {}
 
 export function exists(path: string) {
+  return access(path, fs.constants.F_OK);
+}
+export function writeFile(path: string, data: string | Buffer) {
   return new Promise((resolve, reject) => {
-    try {
-      fs.access(path, fs.constants.F_OK, () => {
-        resolve(true);
-      });
-    } catch (e) {
-      reject(false);
-    }
+    fs.writeFile(path, data, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
   });
 }
+export function isDir(path: string) {
+  return access(path, fs.constants.O_DIRECTORY);
+}
 
-export function isDir() {}
+function access(path: string, mode: number | undefined) {
+  return new Promise((resolve) => {
+    fs.access(path, mode, (err) => {
+      if (err) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+}
