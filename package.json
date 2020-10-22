@@ -12,10 +12,10 @@
     "@react-native-community/async-storage": "^1.6.2",
     "febrest": "^0.11.17",
     "prop-types": "^15.7.2",
-    "react": "16.8.6",
+    "react": "16.13.1",
     "react-febrest": "^0.11.7",
     "react-lifecycles-compat": "^3.0.4",
-    "react-native": "0.60.5",
+    "react-native": "0.63.3",
     "react-native-awesome-viewpager": "^1.1.1",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-webview": "^7.0.4",
@@ -32,17 +32,33 @@
     "@types/react-native-vector-icons": "^6.4.0",
     "@types/react-native-video": "^3.1.4",
     "@types/react-navigation": "^3.0.6",
-    "@types/shelljs": "^0.8.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.3.1",
     "jest": "24.3.1",
     "metro-react-native-babel-preset": "0.54.1",
     "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.8.6",
-    "shelljs": "^0.8.3",
-    "typescript": "^3.3.3333"
+    "ts-jest": "^26.4.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "verbose": true,
+    "testMatch": [
+      "**/__tests__/**/*.ts",
+      "**/?(*.)+(spec|test).ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "packages"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
   }
 }

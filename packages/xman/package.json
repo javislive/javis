@@ -1,0 +1,7 @@
+{
+  "name": "xman",
+  "version": "1.0.0",
+  "bin": {
+    "xman": "./index.js"
+  }
+}
