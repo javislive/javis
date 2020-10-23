@@ -1,10 +1,9 @@
-import os from 'os';
+import path from 'path';
+import metro from './metro';
+import {run} from './utils';
 const args = process.argv.slice(2);
 const cmd = args.shift();
-const path = require('path');
-const metro = require('./metro');
 const fs = require('fs');
-const {execSync} = require('child_process');
 let platform = 'android';
 let falvors = ['server', 'client'];
 for (let i = 0; i < args.length; i++) {
@@ -27,8 +26,8 @@ for (let i = 0; i < args.length; i++) {
   }
 }
 // const falvors = args.shift() === '-c' ? ['client'] : ['server', 'client'];
-function buildMetro(env, platform) {
-  const config = metro(env, platform);
+function buildMetro(env: string, platform: string) {
+  const config = metro({env, platform, path: ''});
   const data = `module.exports=${JSON.stringify(config, null, '\t')}`;
   fs.writeFileSync(
     path.resolve(__dirname, '../metro.config.js'),
@@ -38,7 +37,7 @@ function buildMetro(env, platform) {
 }
 function start() {
   buildMetro('debug', falvors[0]);
-  shelljs.exec('react-native start');
+  run('react-native start');
 }
 
 function relaseAndroid(buildType, falvors) {
@@ -53,7 +52,7 @@ function relaseAndroid(buildType, falvors) {
     buildMetro(buildType, falvor);
     falvor = falvor[0].toUpperCase() + falvor.slice(1);
 
-    shelljs.exec(`${cmd} assemble${falvor}${buildCMD}`);
+    run(`${cmd} assemble${falvor}${buildCMD}`);
   });
 }
 function release(buildType, platform, falvors) {
@@ -61,7 +60,7 @@ function release(buildType, platform, falvors) {
     relaseAndroid(buildType, falvors);
   }
 }
-function run() {
+function exec() {
   switch (cmd) {
     case 'start':
       return start();
@@ -76,4 +75,4 @@ function run() {
   }
 }
 
-run();
+exec();

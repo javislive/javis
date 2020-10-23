@@ -9,7 +9,7 @@ export function run(
   }: {
     stdout?: (data: Buffer) => void;
     stderr?: (data: Buffer) => void;
-  },
+  } = {},
 ) {
   return new Promise((resolve, reject) => {
     const [script, ...params] = cmd.split(/\s+/);

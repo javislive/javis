@@ -9,11 +9,12 @@ const {resolve} = path;
 const root = resolve('./');
 
 export interface MetroConfig {
-  pkg: string;
+  pkg?: string;
   env: string;
   path: string;
+  platform: string;
 }
-function metro({env, path}: MetroConfig) {
+function metro({env, path, platform}: MetroConfig) {
   const extraNodeModules: {
     [key: string]: string;
   } = {};
@@ -36,7 +37,17 @@ function metro({env, path}: MetroConfig) {
       }),
     },
     resolver: {
-      sourceExts: [`${env}.tsx`, `${env}.ts`, 'js', 'ts', 'tsx'],
+      sourceExts: [
+        `${env}.tsx`,
+        `${env}.ts`,
+        `${platform}.ts`,
+        `${platform}.tsx`,
+        `${platform}.${env}.ts`,
+        `${platform}.${env}.tsx`,
+        'js',
+        'ts',
+        'tsx',
+      ],
       extraNodeModules,
     },
     projectRoot: root,
